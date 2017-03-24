@@ -1,4 +1,4 @@
-baseurl = "https://almir.github.io/"
+baseurl = "https://almir.github.io"
 languageCode = "en-us"
 title = "Almir Dzinovic's Corner"
 theme = "hucore-custom"
