@@ -1,4 +1,4 @@
-baseurl = "https://www.dzinovic.net"
+baseurl = "https://almir.github.io/"
 languageCode = "en-us"
 title = "Almir Dzinovic's Corner"
 theme = "hucore-custom"
@@ -11,7 +11,7 @@ tag = "tags"
 category = "categories"
 
 [params]
-avatar = "img/androidified_self.png"
+avatar = "https://almir.github.io/img/androidified_self.png"
 description = "My little corner of the web"
 keywords = ["linux", "system", "computer"]
 author = "Almir Dzinovic"
