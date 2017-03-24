@@ -1,0 +1,13 @@
+1.1.0.0
+	- User's manual updated
+	- Credits dialog added
+	- New feature to start robocopy as a separate process added
+	- Changed reference from "robocopy" to "robocopy.exe" when writing to a script
+	- Copyright year and email address entries populated
+	- Function to include quotation marks automatically for source, destination and
+	  log file paths if needed added
+	- Code optimizations needed for the new framework
+	- Changed target framework from .NET 4 to .NET 2
+
+1.0.0.0
+	- Initial release

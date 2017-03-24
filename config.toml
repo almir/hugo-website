@@ -1,0 +1,39 @@
+baseurl = "https://www.dzinovic.net"
+languageCode = "en-us"
+title = "Almir Dzinovic's Corner"
+theme = "hucore-custom"
+copyright = "&copy; 2010-2017 by <a href=\"https://www.dzinovic.net\">Almir Dzinovic's Corner</a>"
+disqusShortname = ""
+googleAnalytics = "UA-58616066-1"
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+
+[params]
+avatar = "img/androidified_self.png"
+description = "My little corner of the web"
+keywords = ["linux", "system", "computer"]
+author = "Almir Dzinovic"
+sharingicons = true
+displayauthor = false
+
+[params.highlight]
+style = "github"
+languages = ["go", "dockerfile"]
+
+[[params.social]]
+url = "https://github.com/almir"
+fa_icon = "fa-github"
+
+[[params.social]]
+url = "https://twitter.com/almirdz"
+fa_icon = "fa-twitter"
+
+[[params.social]]
+url = "https://plus.google.com/+AlmirDzinovic"
+fa_icon = "fa-google-plus"
+
+[[params.social]]
+url = "https://linkedin.com/in/almirdzinovic"
+fa_icon = "fa-linkedin-square"

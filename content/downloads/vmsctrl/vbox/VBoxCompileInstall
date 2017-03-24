@@ -1,0 +1,243 @@
+#!/bin/bash
+
+#: Title          : VBoxCompileInstall
+#: Original Title : S.A.S.I. - SuSE Automated Script Installer
+#: Date Created   : Wed Sep  7 18:35:31 CDT 2011
+#: Last Edit      : Wed Nov 23 19:52:31 CDT 2011
+#: Author         : James D. McDaniel
+#: Version        : 1.02
+#: Description    : Multiple Script File Installed
+#: Options        : None (Do Not Enter any Options)
+ 
+TITLE="S.A.S.I. - SuSE Automated Script Installer - Version 1.02"
+ 
+#
+# Written for the openSUSE forums on Wednesday November 23, 2011
+#
+
+#
+# This creates two files for you: vboxcompile in /etc/init.d as root
+#                               : vboxcompile.conf in /etc/default as root
+#
+# These files are used to automatically recompile VirtualBox Kernel Modules
+#
+
+declare -a Sysfile
+declare -a File
+declare -a Folder
+declare -a Cmd1
+declare -a Cmd2
+
+#
+# Required Script/Text File Creation Information goes here *******************
+#
+
+# Number of Script/Text Files To Create 
+
+Files=2
+
+# Script/Text File #1 Header Information
+
+Sysfile[ 1 ]="true"
+File[ 1 ]="vboxcompile"
+Folder[ 1 ]="/etc/init.d"
+Cmd1[ 1 ]="chmod +x /etc/init.d/vboxcompile"
+Cmd2[ 1 ]="chkconfig vboxcompile on"
+
+# Script/Text File Header #2 Information
+
+Sysfile[ 2 ]="true"
+File[ 2 ]="vboxcompile.conf"
+Folder[ 2 ]="/etc/default"
+Cmd1[ 2 ]=""
+Cmd2[ 2 ]=""
+
+#
+# This is the standard GPL Statement, leave at the top of the script.
+# Just use the command show_gpl after this function for it to be shown.
+#
+
+function show_gpl {
+echo ""
+echo "sasi is a bash script file written to be used with openSUSE."
+echo "Copyright (C) 2011 by James D. McDaniel, jmcdaniel3@austin.rr.com"
+echo ""
+echo "This program is free software; you can redistribute it and/or modify"
+echo "it under the terms of the GNU General Public License as published by"
+echo "the Free Software Foundation; either version 2 of the License, or"
+echo "(at your option) any later version."
+echo ""
+echo "This program is distributed in the hope that it will be useful,"
+echo "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
+echo "GNU General Public License for more details."
+echo ""
+echo "You should have received a copy of the GNU General Public License"
+echo "along with this program; if not, write to the Free Software"
+echo "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"
+echo ""
+}
+
+#
+# This is where the entire text/script files are placed **********************
+#
+
+function fileoutput {
+
+if [ $Files -eq 1 ] ; then
+
+#
+# This is the first text/script file******************************************
+#
+cat >> "${Folder[ 1 ]}/${File[ 1 ]}" << "EOFTEXT"
+#! /bin/sh
+# Linux kernel module init script
+
+#: Title       : vboxcompile
+#: Date Created: Sat Oct 16 06:00:29 PDT 2010
+#: Last Edit   : Sat Oct 16 06:00:29 PDT 2010
+#: Author      : please_try_again
+#: Version     : 1.0
+#: Description : Automatically recompile modules after kernel update
+
+
+# chkconfig: 35 30 70
+# description: recompile modules
+#
+### BEGIN INIT INFO
+# Provides:       vboxcompile 
+# Required-Start: $syslog
+# Required-Stop:
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Short-Description: recomppile kernel modules
+### END INIT INFO
+
+# Define the modules you want to autorecompile in the file /etc/default/vboxcompile.conf
+# or in the file specified by the variable CFG below
+CFG=/etc/default/vboxcompile.conf
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# /etc/default/vboxcompile.conf example 
+# kernel modules to autocompile after kernel update
+# module	      command
+# vboxdrv         service vboxdrv setup
+# fglrx           /usr/bin/fglrx-kernel-build.sh
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:$PATH
+
+start()
+{
+
+# check if $CFG exist
+if [ ! -e $CFG ] ; then
+	echo $CFG not found
+	exit 1
+fi
+
+# parse /etc/default/vboxcompile.conf
+eval `awk 'BEGIN { I=-1 } ; !/^#/ { if ( NF ) { MOD=$1 ; I++ ; $1="" ; sub(/ /, "", $0) ;  printf "MOD[%i]=%s; CMD[%i]=\"%s\";",  I, MOD, I, $0 } }' $CFG`
+
+# exit if no modules defined in /etc/default/vboxcompile.conf
+
+if [ ${#MOD[*]} -eq 0 ] ; then
+	exit 2
+fi
+
+# kernel modules dir
+MDIR=/lib/modules/$(uname -r)
+
+i=0
+while [ $i -lt ${#MOD[*]} ] ; do
+	mod=${MOD[$i]}
+	cmd=${CMD[$i]}
+	unset mof	
+	if [ "x$mod"!="x" -a "x$cmd"!="x" ] ; then
+		mod=${mod}.ko
+		mof=`find $MDIR -name $mod`
+		if [ "$mof" == "" ] ; then
+			echo " - compiling module $mod"
+			$cmd
+		fi
+	fi
+	let i++
+done
+}
+
+case "$1" in
+start)
+    start
+    ;;
+esac
+
+exit 0
+
+EOFTEXT
+fi
+
+if [ $Files -eq 2 ] ; then
+
+#
+# This is the second text/script file******************************************
+#
+cat >> "${Folder[ 2 ]}/${File[ 2 ]}" << "EOFTEXT"
+# kernel modules to autocompile after kernel update
+# name              command
+vboxdrv             service vboxdrv setup
+
+EOFTEXT
+fi
+}
+
+#
+# Main Program Begins Here ***************************************************
+#
+
+if [ "$1" == "" ] ; then
+clear
+echo $TITLE
+echo
+echo "Please Wait .... while $Files file(s) are being Created ..."
+  while [ $Files -gt 0 ] ; do
+    if [ "${Sysfile[$Files]}" == "true" ] ; then
+      echo
+      $0 $Files
+    else
+      echo
+      $0 $Files
+    fi
+    let Files=Files-1
+  done
+  show_gpl
+else
+  Files=$1
+  echo
+  echo The File "${Folder[ $Files ]}/${File[ $Files ]} status is being Examined!"
+  echo
+# Does the Folder Exist?
+  if [[ -d "${Folder[ $Files ]}" ]] ; then
+# Does the File Exist before we create it?
+    if [ ! -e "${Folder[$Files]}/${File[$Files]}" ] ; then
+      fileoutput
+# Does the File Exist After we created it?
+      if [ -e "${Folder[$Files]}/${File[$Files]}" ] ; then
+# Execute the required commands, if any
+	${Cmd1[$Files]}
+	${Cmd2[$Files]}
+	echo "The File ${Folder[$Files]}/${File[$Files]} Was Written!"
+      else
+	echo "The File ${Folder[$Files]}/${File[$Files]} Was NOT Written!"
+      fi
+    else
+      echo "The File ${Folder[$Files]}/${File[$Files]} Already Existed!"
+    fi
+  else
+      echo "The Folder Name of ${Folder[ $Files ]} did not Exist!"
+  fi
+fi
+
+exit 0
+
+# End Of Script
