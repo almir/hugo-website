@@ -11,7 +11,7 @@ tag = "tags"
 category = "categories"
 
 [params]
-avatar = "https://almir.github.io/img/androidified_self.png"
+avatar = "img/androidified_self.png"
 description = "My little corner of the web"
 keywords = ["linux", "system", "computer"]
 author = "Almir Dzinovic"
