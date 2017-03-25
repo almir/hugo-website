@@ -99,14 +99,14 @@ VBOXLATEST=`wget -q -O - http://download.virtualbox.org/virtualbox/LATEST.TXT` &
 After all that, install the custom init script (and its prerequsite package) to start and stop virtual machines automatically on startup and shutdown:
 ```
 yum -y install redhat-lsb-core
-wget /downloads/vmsctrl/vbox/vmsctrl.tar.gz
+wget {{< baseurl >}}/downloads/vmsctrl/vbox/vmsctrl.tar.gz
 tar xvzf vmsctrl.tar.gz -C /etc/init.d/
 chkconfig --add vmsctrl
 ```
 
 Last, but not least, make your system automatically recompile VirtualBox kernel modules on kernel update:
 ```
-wget /downloads/vmsctrl/vbox/VBoxCompileInstall
+wget {{< baseurl >}}/downloads/vmsctrl/vbox/VBoxCompileInstall
 chmod +x VBoxCompileInstall
 ./VBoxCompileInstall
 ```
