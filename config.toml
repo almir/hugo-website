@@ -2,7 +2,7 @@ baseurl = "https://dzinovic.net"
 languageCode = "en-us"
 title = "Almir Dzinovic's Corner"
 theme = "hucore-custom"
-copyright = "&copy; 2010-2017 by <a href=\"https://dzinovic.net\">Almir Dzinovic's Corner</a>"
+copyright = "&copy; 2010-2018 by <a href=\"https://dzinovic.net\">Almir Dzinovic's Corner</a>"
 disqusShortname = ""
 googleAnalytics = "UA-58616066-1"
 
