@@ -15,7 +15,7 @@ avatar = "img/androidified_self.png"
 description = "My little corner of the web"
 keywords = ["linux", "system", "computer"]
 author = "Almir Dzinovic"
-sharingicons = true
+sharingicons = false
 displayauthor = false
 
 [params.highlight]
