@@ -1,4 +1,4 @@
-baseurl = "https://dzinovic.net"
+baseurl = ""
 languageCode = "en-us"
 title = "Almir Dzinovic's Corner"
 theme = "hucore-custom"
