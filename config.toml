@@ -31,9 +31,5 @@ url = "https://twitter.com/almirdz"
 fa_icon = "fa-twitter"
 
 [[params.social]]
-url = "https://plus.google.com/+AlmirDzinovic"
-fa_icon = "fa-google-plus"
-
-[[params.social]]
 url = "https://linkedin.com/in/almirdzinovic"
 fa_icon = "fa-linkedin-square"
