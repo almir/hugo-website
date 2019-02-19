@@ -8,12 +8,6 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:description" content="{{ .Site.Params.Description }}">
 <meta property="og:type" content="website" />
-<!-- Start simulate security headers block -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
-<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://ssl.google-analytics.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com; img-src 'self' https://www.google.com https://www.google-analytics.com https://ssl.google-analytics.com https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com; font-src 'self' https://themes.googleusercontent.com https://maxcdn.bootstrapcdn.com https://cdn.joinhoney.com; frame-src https://www.facebook.com https://s-static.ak.facebook.com; object-src 'none'" />
-<meta http-equiv="Referrer-Policy" content="no-referrer" />
-<!-- End simulate security headers block -->
 <title>{{ .Title }}{{ if eq .IsHome false }} | {{ .Site.Title }}{{ end }}</title>
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
 <link rel="shortcut icon" href="{{ "img/favicon.ico" | relURL }}">
