@@ -18,6 +18,11 @@ author = "Almir Dzinovic"
 sharingicons = false
 displayauthor = false
 
+[sitemap]
+changefreq = "monthly"
+filename = "sitemap.xml"
+priority = 0.5
+
 [params.highlight]
 style = "github"
 languages = ["go", "dockerfile"]
