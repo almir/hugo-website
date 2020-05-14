@@ -48,18 +48,22 @@ chkconfig httpd on
 We will also need to install the _Development Tools_ group, which is a prerequisite for VirtualBox kernel modules to compile:<br>
 ```yum -y groupinstall "Development Tools"```
 
-After that, we add the VirtualBox repository to the list of the repositories on our system.<br>
-```wget -O /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo```
+After that, we add the VirtualBox repository to the list of the repositories on our system.
+```
+wget -O /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+```
 
 Now it's time to install VirtualBox:<br>
-```yum -y install VirtualBox-4.3```
+```yum -y install VirtualBox-5.0```
 
 Once the installation is done add the regular user to the _vboxusers_ user group:<br>
 ```usermod -G vboxusers reguser```
 
-Download and unzip the latest version of the phpVirtualBox:<br>
-```wget 'http://sourceforge.net/projects/phpvirtualbox/files/latest/download' -O phpvirtualbox-latest.zip
-unzip phpvirtualbox-*.zip```
+Download and unzip the latest version of the phpVirtualBox:
+```
+wget -O phpvirtualbox-latest.zip 'http://sourceforge.net/projects/phpvirtualbox/files/latest/download'
+unzip phpvirtualbox-*.zip
+```
 
 Then, copy the phpVirtualBox files to the Apache Documents Root directory:<br>
 ```cp -r phpvirtualbox-*/* /var/www/html/```
@@ -87,26 +91,27 @@ chkconfig vboxweb-service on
 Enable USB support in VirtualBox:
 ```
 mkdir /vbusbfs
-echo "none /vbusbfs usbfs rw,devgid=$(awk -F : '/vboxusers/ {print $3}' /etc/group),devmode=664 0 0" &gt;&gt; /etc/fstab
+echo "none /vbusbfs usbfs rw,devgid=$(awk -F : '/vboxusers/ {print $3}' /etc/group),devmode=664 0 0" >> /etc/fstab
 mount -a
 ```
 
 Install the VirtualBox Extension Pack (has to be the same version as VirtualBox itself, and is required in order to be able to run the guest's console through web interface):
 ```
-VBOXLATEST=`wget -q -O - http://download.virtualbox.org/virtualbox/LATEST.TXT` && wget http://download.virtualbox.org/virtualbox/$VBOXLATEST/Oracle_VM_VirtualBox_Extension_Pack-$VBOXLATEST.vbox-extpack && VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-$VBOXLATEST.vbox-extpack
+wget http://download.virtualbox.org/virtualbox/5.0.40/Oracle_VM_VirtualBox_Extension_Pack-5.0.40.vbox-extpack && \
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.0.40.vbox-extpack
 ```
 
 After all that, install the custom init script (and its prerequsite package) to start and stop virtual machines automatically on startup and shutdown:
 ```
 yum -y install redhat-lsb-core
-wget {{< baseurl >}}/downloads/vmsctrl/vbox/vmsctrl.tar.gz
+wget https://dzinovic.net/downloads/vmsctrl/vbox/vmsctrl.tar.gz
 tar xvzf vmsctrl.tar.gz -C /etc/init.d/
 chkconfig --add vmsctrl
 ```
 
 Last, but not least, make your system automatically recompile VirtualBox kernel modules on kernel update:
 ```
-wget {{< baseurl >}}/downloads/vmsctrl/vbox/VBoxCompileInstall
+wget https://dzinovic.net/downloads/vmsctrl/vbox/VBoxCompileInstall
 chmod +x VBoxCompileInstall
 ./VBoxCompileInstall
 ```
